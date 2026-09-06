@@ -1,4 +1,4 @@
-package com.empresa.main;
+﻿package com.empresa.main;
 
 import com.empresa.dao.ClienteDao;
 import com.empresa.models.Cliente;
@@ -10,7 +10,7 @@ import java.util.Scanner;
 /**
  * Controlador de consola para el CRUD de {@link Cliente}.
  * Metodos cortos para mantener baja complejidad ciclomatica.
- * @author FoodSystem
+ * @author Paula Martínez
  * @version 1.0
  */
 public class MenuCliente {

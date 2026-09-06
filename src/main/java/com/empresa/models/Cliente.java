@@ -1,4 +1,4 @@
-package com.empresa.models;
+﻿package com.empresa.models;
 
 /**
  * Entidad que representa a un Cliente del sistema de comidas rapidas.
@@ -6,7 +6,7 @@ package com.empresa.models;
  * <p>Encapsula los datos personales y de contacto del cliente,
  * aplicando encapsulamiento como principio fundamental de POO.</p>
  *
- * @author FoodSystem
+ * @author Paula Martínez
  * @version 1.0
  */
 public class Cliente {

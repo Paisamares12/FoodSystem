@@ -1,4 +1,4 @@
-package com.empresa.dao;
+﻿package com.empresa.dao;
 
 import com.empresa.models.ComidaRapida;
 
@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * Implementacion DAO en memoria para {@link ComidaRapida}.
  * Usa ArrayList como base de datos en memoria.
- * @author FoodSystem
+ * @author Paula Martínez
  * @version 1.0
  */
 public class ComidaRapidaDao implements IDao<ComidaRapida, Integer> {

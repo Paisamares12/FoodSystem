@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * Implementacion DAO en memoria para {@link Cliente}.
  * Usa ArrayList como base de datos en memoria.
- * @author FoodSystem
+ * @author Paula Martínez
  * @version 1.0
  */
 public class ClienteDao implements IDao<Cliente, Integer> {

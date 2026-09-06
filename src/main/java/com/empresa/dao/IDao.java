@@ -1,4 +1,4 @@
-package com.empresa.dao;
+﻿package com.empresa.dao;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,7 +7,7 @@ import java.util.Optional;
  * Interfaz generica CRUD (Data Access Object).
  * @param <T>  tipo de la entidad
  * @param <ID> tipo del identificador
- * @author FoodSystem
+ * @author Paula Martínez
  * @version 1.0
  */
 public interface IDao<T, ID> {

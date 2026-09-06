@@ -1,4 +1,4 @@
-package com.empresa.main;
+﻿package com.empresa.main;
 
 import com.empresa.dao.ClienteDao;
 import com.empresa.dao.ComidaRapidaDao;
@@ -11,7 +11,7 @@ import java.util.Scanner;
  * <p>Inicializa los DAOs, crea los menus y gestiona el ciclo principal.
  * Delega cada responsabilidad a su modulo correspondiente.</p>
  *
- * @author FoodSystem
+ * @author Paula Martínez
  * @version 1.0
  */
 public class Main {

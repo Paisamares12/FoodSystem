@@ -1,8 +1,8 @@
-package com.empresa.models;
+﻿package com.empresa.models;
 
 /**
  * Entidad que representa un producto de comida rapida.
- * @author FoodSystem
+ * @author Paula Martínez
  * @version 1.0
  */
 public class ComidaRapida {
