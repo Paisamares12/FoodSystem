@@ -1,4 +1,4 @@
-﻿package com.empresa.main;
+﻿package com.empresa.launcher;
 
 import com.empresa.dao.ClienteDao;
 import com.empresa.dao.ComidaRapidaDao;

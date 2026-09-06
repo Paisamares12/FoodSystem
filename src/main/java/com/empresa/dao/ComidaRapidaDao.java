@@ -1,28 +1,28 @@
 ﻿package com.empresa.dao;
 
-import com.empresa.modelo.ComidaRapida;
+import com.empresa.modelo.Comida;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 /**
- * Implementacion DAO en memoria para {@link ComidaRapida}.
+ * Implementacion DAO en memoria para {@link Comida}.
  * Usa ArrayList como base de datos en memoria.
  * @author Paula Martínez
  * @version 1.0
  */
-public class ComidaRapidaDao implements IDao<ComidaRapida, Integer> {
+public class ComidaRapidaDao implements IDao<Comida, Integer> {
 
     /** Almacenamiento en memoria. */
-    private final List<ComidaRapida> almacenamiento = new ArrayList<>();
+    private final List<Comida> almacenamiento = new ArrayList<>();
 
     /**
      * Agrega un nuevo producto.
      * @param producto producto a agregar
      */
     @Override
-    public void agregar(ComidaRapida producto) {
+    public void agregar(Comida producto) {
         almacenamiento.add(producto);
         System.out.println("Producto agregado correctamente.");
     }
@@ -33,7 +33,7 @@ public class ComidaRapidaDao implements IDao<ComidaRapida, Integer> {
      * @return Optional con el producto si existe
      */
     @Override
-    public Optional<ComidaRapida> obtenerPorId(Integer id) {
+    public Optional<Comida> obtenerPorId(Integer id) {
         return almacenamiento.stream()
                 .filter(p -> p.getId() == id)
                 .findFirst();
@@ -44,7 +44,7 @@ public class ComidaRapidaDao implements IDao<ComidaRapida, Integer> {
      * @return lista de productos
      */
     @Override
-    public List<ComidaRapida> obtenerTodos() {
+    public List<Comida> obtenerTodos() {
         return new ArrayList<>(almacenamiento);
     }
 
@@ -54,8 +54,8 @@ public class ComidaRapidaDao implements IDao<ComidaRapida, Integer> {
      * @return true si la actualizacion fue exitosa
      */
     @Override
-    public boolean actualizar(ComidaRapida actualizado) {
-        Optional<ComidaRapida> encontrado = obtenerPorId(actualizado.getId());
+    public boolean actualizar(Comida actualizado) {
+        Optional<Comida> encontrado = obtenerPorId(actualizado.getId());
         if (encontrado.isEmpty()) {
             return false;
         }
@@ -68,7 +68,7 @@ public class ComidaRapidaDao implements IDao<ComidaRapida, Integer> {
      * @param existente  producto original
      * @param actualizado producto con los nuevos valores
      */
-    private void aplicarActualizacion(ComidaRapida existente, ComidaRapida actualizado) {
+    private void aplicarActualizacion(Comida existente, Comida actualizado) {
         existente.setNombre(actualizado.getNombre());
         existente.setIngredientes(actualizado.getIngredientes());
         existente.setPrecio(actualizado.getPrecio());
