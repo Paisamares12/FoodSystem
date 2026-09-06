@@ -1,0 +1,8 @@
+﻿C:\Users\paisa\Desktop\Cosas Importantes Paula\Proyectos\FoodSystem\src\main\java\com\empresa\dao\ClienteDao.java
+C:\Users\paisa\Desktop\Cosas Importantes Paula\Proyectos\FoodSystem\src\main\java\com\empresa\dao\ComidaRapidaDao.java
+C:\Users\paisa\Desktop\Cosas Importantes Paula\Proyectos\FoodSystem\src\main\java\com\empresa\dao\IDao.java
+C:\Users\paisa\Desktop\Cosas Importantes Paula\Proyectos\FoodSystem\src\main\java\com\empresa\main\Main.java
+C:\Users\paisa\Desktop\Cosas Importantes Paula\Proyectos\FoodSystem\src\main\java\com\empresa\main\MenuCliente.java
+C:\Users\paisa\Desktop\Cosas Importantes Paula\Proyectos\FoodSystem\src\main\java\com\empresa\main\MenuProducto.java
+C:\Users\paisa\Desktop\Cosas Importantes Paula\Proyectos\FoodSystem\src\main\java\com\empresa\models\Cliente.java
+C:\Users\paisa\Desktop\Cosas Importantes Paula\Proyectos\FoodSystem\src\main\java\com\empresa\models\ComidaRapida.java
