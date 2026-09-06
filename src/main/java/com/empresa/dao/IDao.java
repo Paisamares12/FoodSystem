@@ -1,33 +1,58 @@
 package com.empresa.dao;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
- * Interfaz generica que define el contrato CRUD para cualquier entidad.
+ * Define las operaciones básicas de acceso a datos para una entidad.
  *
- * <p>Aplica el principio de Inversion de Dependencias (DIP):
- * las capas superiores dependen de esta abstraccion, no de la implementacion.</p>
+ * <p>Esta interfaz establece las operaciones CRUD (Crear, Leer,
+ * Actualizar y Eliminar) que deben implementar las clases DAO
+ * encargadas de interactuar con la base de datos.</p>
  *
- * @param <T>  tipo de la entidad
- * @param <ID> tipo del identificador
- * @author FoodSystem
+ * <p>Los tipos genéricos permiten utilizar la misma interfaz
+ * con diferentes entidades y tipos de identificadores.</p>
+ *
+ * @param <T> tipo de entidad que será gestionada
+ * @param <ID> tipo de dato utilizado como identificador de la entidad
+ *
+ * @author Paula Martínez
  * @version 2.0
  */
 public interface IDao<T, ID> {
 
-    /** Persiste una nueva entidad en la base de datos. @param entidad objeto a guardar */
-    void agregar(T entidad);
+    /**
+     * Crea una nueva entidad en la base de datos.
+     *
+     * @param entidad entidad que se desea almacenar
+     */
+    void crear(T entidad);
 
-    /** Busca una entidad por su identificador. @param id clave primaria @return Optional con la entidad */
-    Optional<T> obtenerPorId(ID id);
+    /**
+     * Actualiza una entidad existente en la base de datos.
+     *
+     * @param entidad entidad con los datos actualizados
+     */
+    void actualizar(T entidad);
 
-    /** Retorna todas las entidades almacenadas. @return lista completa */
-    List<T> obtenerTodos();
+    /**
+     * Elimina una entidad de la base de datos utilizando su identificador.
+     *
+     * @param id identificador de la entidad que se desea eliminar
+     */
+    void eliminar(ID id);
 
-    /** Actualiza los datos de una entidad existente. @param entidad con datos nuevos @return true si exitoso */
-    boolean actualizar(T entidad);
+    /**
+     * Obtiene una entidad utilizando su identificador.
+     *
+     * @param id identificador de la entidad que se desea consultar
+     * @return entidad encontrada o null si no existe
+     */
+    T obtenerPorId(ID id);
 
-    /** Elimina una entidad por su identificador. @param id clave primaria @return true si eliminado */
-    boolean eliminar(ID id);
+    /**
+     * Obtiene todas las entidades almacenadas en la base de datos.
+     *
+     * @return lista con todas las entidades
+     */
+    List<T> listarTodos();
 }

@@ -1,7 +1,7 @@
 ﻿package com.empresa.launcher;
 
 import com.empresa.dao.ClienteDao;
-import com.empresa.dao.ComidaRapidaDao;
+import com.empresa.dao.ComidaDao;
 
 import java.util.Scanner;
 
