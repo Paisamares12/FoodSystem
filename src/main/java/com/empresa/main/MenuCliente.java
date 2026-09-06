@@ -1,7 +1,7 @@
 ﻿package com.empresa.main;
 
 import com.empresa.dao.ClienteDao;
-import com.empresa.models.Cliente;
+import com.empresa.modelo.Cliente;
 
 import java.util.List;
 import java.util.Optional;

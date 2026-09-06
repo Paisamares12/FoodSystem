@@ -1,7 +1,7 @@
 ﻿package com.empresa.main;
 
 import com.empresa.dao.ComidaRapidaDao;
-import com.empresa.models.ComidaRapida;
+import com.empresa.modelo.ComidaRapida;
 
 import java.util.List;
 import java.util.Optional;

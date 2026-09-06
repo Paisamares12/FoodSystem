@@ -1,6 +1,6 @@
 ﻿package com.empresa.dao;
 
-import com.empresa.models.ComidaRapida;
+import com.empresa.modelo.ComidaRapida;
 
 import java.util.ArrayList;
 import java.util.List;
