@@ -3,6 +3,7 @@ package com.empresa.control;
 import com.empresa.dao.ClienteDao;
 import com.empresa.dao.ConexionBD;
 import com.empresa.dao.IDao;
+import com.empresa.excepciones.ClienteNoEncontradoException;
 import com.empresa.modelo.Cliente;
 import com.empresa.util.Validador;
 
@@ -15,7 +16,7 @@ import java.util.List;
  * <p>Implementa la interfaz {@link IControlCliente}, actuando como intermediario
  * entre la capa de presentación (Vista) y la capa de acceso a datos (DAO).
  * Se encarga de validar los datos ingresados antes de realizar cualquier operación
- * de persistencia.</p>
+ * de persistencia, cumpliendo con los principios SOLID (SRP, DIP, LSP).</p>
  *
  * @author Paula Martínez
  * @version 2.0
@@ -23,7 +24,7 @@ import java.util.List;
 public class ControlCliente implements IControlCliente {
 
     /**
-     * Objeto de acceso a datos para la entidad Cliente.
+     * Objeto de acceso a datos para la entidad Cliente mediante abstracción.
      */
     private final IDao<Cliente, Integer> clienteDao;
 
@@ -37,11 +38,14 @@ public class ControlCliente implements IControlCliente {
 
     /**
      * Constructor con inyección de dependencia del DAO.
-     * Permite pruebas unitarias o el uso de implementaciones alternativas de DAO.
+     * Permite pruebas unitarias o el uso de implementaciones alternativas de DAO (DIP).
      *
      * @param clienteDao instancia del DAO de clientes
      */
     public ControlCliente(IDao<Cliente, Integer> clienteDao) {
+        if (clienteDao == null) {
+            throw new IllegalArgumentException("El DAO de cliente no puede ser nulo.");
+        }
         this.clienteDao = clienteDao;
     }
 
@@ -67,12 +71,19 @@ public class ControlCliente implements IControlCliente {
      * @param nombre    nuevo nombre del cliente
      * @param telefono  nuevo teléfono de contacto
      * @param direccion nueva dirección del cliente
+     * @throws ClienteNoEncontradoException si el cliente con el ID proporcionado no existe
      * @throws IllegalArgumentException si los datos no son válidos o el ID no es positivo
      */
     @Override
     public void actualizarCliente(int id, String nombre, String telefono, String direccion) {
         Validador.validarIdPositivo(id, "ID de cliente");
         validarDatos(nombre, telefono, direccion);
+
+        Cliente existente = clienteDao.obtenerPorId(id);
+        if (existente == null) {
+            throw new ClienteNoEncontradoException(id);
+        }
+
         Cliente cliente = new Cliente(id, nombre.trim(), telefono.trim(), direccion.trim());
         clienteDao.actualizar(cliente);
     }
@@ -81,11 +92,18 @@ public class ControlCliente implements IControlCliente {
      * Elimina un cliente del sistema según su identificador único.
      *
      * @param id identificador único del cliente a eliminar
+     * @throws ClienteNoEncontradoException si el cliente con el ID proporcionado no existe
      * @throws IllegalArgumentException si el ID es menor o igual a cero
      */
     @Override
     public void eliminarCliente(int id) {
         Validador.validarIdPositivo(id, "ID de cliente");
+
+        Cliente existente = clienteDao.obtenerPorId(id);
+        if (existente == null) {
+            throw new ClienteNoEncontradoException(id);
+        }
+
         clienteDao.eliminar(id);
     }
 
@@ -93,13 +111,18 @@ public class ControlCliente implements IControlCliente {
      * Obtiene un cliente a partir de su ID.
      *
      * @param id identificador del cliente
-     * @return objeto {@link Cliente} encontrado, o null si no existe
+     * @return objeto {@link Cliente} encontrado
+     * @throws ClienteNoEncontradoException si no existe ningún cliente con dicho ID
      * @throws IllegalArgumentException si el ID es menor o igual a cero
      */
     @Override
     public Cliente obtenerCliente(int id) {
         Validador.validarIdPositivo(id, "ID de cliente");
-        return clienteDao.obtenerPorId(id);
+        Cliente cliente = clienteDao.obtenerPorId(id);
+        if (cliente == null) {
+            throw new ClienteNoEncontradoException(id);
+        }
+        return cliente;
     }
 
     /**

@@ -1,16 +1,13 @@
 package com.empresa.modelo;
 
+import java.util.Objects;
+
 /**
- * Representa una comida dentro del sistema.
+ * Representa la entidad Comida rápida dentro del dominio del sistema.
  *
- * <p>Esta clase pertenece al paquete de modelo y se encarga únicamente
- * de almacenar la información básica de un producto de comida.
- * No contiene lógica de negocio ni elementos relacionados con la
- * presentación.</p>
- *
- * <p>La clase contiene los atributos de identificación, nombre,
- * ingredientes y precio del producto, junto con sus respectivos
- * constructores, métodos getters y setters.</p>
+ * <p>Esta clase encapsula las propiedades de un producto alimenticio
+ * (identificador, nombre, ingredientes y precio), garantizando la
+ * integridad del modelo mediante encapsulamiento estricto.</p>
  *
  * @author Paula Martínez
  * @version 2.0
@@ -18,45 +15,52 @@ package com.empresa.modelo;
 public class Comida {
 
     /**
-     * Identificador único del producto.
+     * Identificador único del producto (clave primaria).
      */
     private int id;
 
     /**
-     * Nombre de la comida.
+     * Nombre de la comida rápida.
      */
     private String nombre;
 
     /**
-     * Lista de ingredientes que componen el producto.
+     * Lista o detalle de ingredientes del producto.
      */
     private String ingredientes;
 
     /**
-     * Precio de venta del producto.
+     * Precio unitario de venta al público.
      */
     private double precio;
 
     /**
-     * Constructor vacío de la clase Comida.
-     *
-     * <p>Permite crear una instancia de Comida sin proporcionar
-     * inicialmente sus atributos. Es utilizado, entre otros casos,
-     * para facilitar el mapeo de resultados obtenidos mediante JDBC.</p>
+     * Constructor por defecto.
+     * Permite instanciar un producto vacío para mapeo u operaciones dinámicas.
      */
     public Comida() {
     }
 
     /**
-     * Constructor completo de la clase Comida.
+     * Constructor para creación de productos nuevos (sin ID asignado por la BD).
      *
-     * <p>Permite crear un producto estableciendo todos sus atributos
-     * desde el momento de su creación.</p>
+     * @param nombre       nombre de la comida
+     * @param ingredientes ingredientes que componen el producto
+     * @param precio       precio de venta al público
+     */
+    public Comida(String nombre, String ingredientes, double precio) {
+        this.nombre = nombre;
+        this.ingredientes = ingredientes;
+        this.precio = precio;
+    }
+
+    /**
+     * Constructor completo para productos existentes (con ID).
      *
-     * @param id identificador único del producto
-     * @param nombre nombre del producto
-     * @param ingredientes lista de ingredientes del producto
-     * @param precio precio de venta del producto
+     * @param id           identificador único del producto
+     * @param nombre       nombre de la comida
+     * @param ingredientes ingredientes que componen el producto
+     * @param precio       precio de venta al público
      */
     public Comida(int id, String nombre, String ingredientes, double precio) {
         this.id = id;
@@ -66,28 +70,21 @@ public class Comida {
     }
 
     /**
-     * Constructor sin id de la clase Comida.
-     *
-     * <p>Permite crear un producto estableciendo sus atributos
-     * desde el momento de su creación.</p>
-     *
-     * @param nombre nombre del producto
-     * @param ingredientes lista de ingredientes del producto
-     * @param precio precio de venta del producto
-     */
-    public Comida(String nombre, String ingredientes, double precio) {
-        this.nombre = nombre;
-        this.ingredientes = ingredientes;
-        this.precio = precio;
-    }
-
-    /**
      * Obtiene el identificador del producto.
      *
-     * @return identificador único del producto
+     * @return identificador numérico
      */
     public int getId() {
         return id;
+    }
+
+    /**
+     * Modifica el identificador del producto.
+     *
+     * @param id nuevo identificador numérico
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -100,33 +97,6 @@ public class Comida {
     }
 
     /**
-     * Obtiene los ingredientes del producto.
-     *
-     * @return lista de ingredientes de la comida
-     */
-    public String getIngredientes() {
-        return ingredientes;
-    }
-
-    /**
-     * Obtiene el precio de venta del producto.
-     *
-     * @return precio de la comida
-     */
-    public double getPrecio() {
-        return precio;
-    }
-
-    /**
-     * Modifica el identificador del producto.
-     *
-     * @param id nuevo identificador del producto
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
      * Modifica el nombre del producto.
      *
      * @param nombre nuevo nombre de la comida
@@ -136,20 +106,80 @@ public class Comida {
     }
 
     /**
-     * Modifica los ingredientes del producto.
+     * Obtiene los ingredientes del producto.
      *
-     * @param ingredientes nueva lista de ingredientes
+     * @return lista de ingredientes
+     */
+    public String getIngredientes() {
+        return ingredientes;
+    }
+
+    /**
+     * Modifica la lista de ingredientes del producto.
+     *
+     * @param ingredientes nuevos ingredientes
      */
     public void setIngredientes(String ingredientes) {
         this.ingredientes = ingredientes;
     }
 
     /**
+     * Obtiene el precio de venta del producto.
+     *
+     * @return precio unitario
+     */
+    public double getPrecio() {
+        return precio;
+    }
+
+    /**
      * Modifica el precio de venta del producto.
      *
-     * @param precio nuevo precio de venta
+     * @param precio nuevo precio unitario
      */
     public void setPrecio(double precio) {
         this.precio = precio;
+    }
+
+    /**
+     * Compara la igualdad de dos productos basándose en su ID y atributos.
+     *
+     * @param o objeto a comparar
+     * @return true si son equivalentes, false de lo contrario
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Comida comida = (Comida) o;
+        return id == comida.id &&
+                Double.compare(comida.precio, precio) == 0 &&
+                Objects.equals(nombre, comida.nombre) &&
+                Objects.equals(ingredientes, comida.ingredientes);
+    }
+
+    /**
+     * Calcula el código hash del producto.
+     *
+     * @return código hash
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nombre, ingredientes, precio);
+    }
+
+    /**
+     * Retorna una representación textual del producto de comida rápida.
+     *
+     * @return cadena con los datos del producto
+     */
+    @Override
+    public String toString() {
+        return "Comida{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", ingredientes='" + ingredientes + '\'' +
+                ", precio=" + precio +
+                '}';
     }
 }

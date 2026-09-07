@@ -1,0 +1,228 @@
+@startuml FoodSystem_ClassDiagram
+skinparam classAttributeIconSize true
+skinparam packageStyle rectangle
+
+package "com.empresa.modelo" {
+    class Cliente {
+        - id : int
+        - nombre : String
+        - telefono : String
+        - direccion : String
+        + Cliente()
+        + Cliente(nombre: String, telefono: String, direccion: String)
+        + Cliente(id: int, nombre: String, telefono: String, direccion: String)
+        + getId() : int
+        + setId(id: int) : void
+        + getNombre() : String
+        + setNombre(nombre: String) : void
+        + getTelefono() : String
+        + setTelefono(telefono: String) : void
+        + getDireccion() : String
+        + setDireccion(direccion: String) : void
+        + equals(o: Object) : boolean
+        + hashCode() : int
+        + toString() : String
+    }
+
+    class Comida {
+        - id : int
+        - nombre : String
+        - ingredientes : String
+        - precio : double
+        + Comida()
+        + Comida(nombre: String, ingredientes: String, precio: double)
+        + Comida(id: int, nombre: String, ingredientes: String, precio: double)
+        + getId() : int
+        + setId(id: int) : void
+        + getNombre() : String
+        + setNombre(nombre: String) : void
+        + getIngredientes() : String
+        + setIngredientes(ingredientes: String) : void
+        + getPrecio() : double
+        + setPrecio(precio: double) : void
+        + equals(o: Object) : boolean
+        + hashCode() : int
+        + toString() : String
+    }
+}
+
+package "com.empresa.dao" {
+    interface IDao<T, ID> {
+        + crear(entidad: T) : void
+        + actualizar(entidad: T) : void
+        + eliminar(id: ID) : void
+        + obtenerPorId(id: ID) : T
+        + listarTodos() : List<T>
+    }
+
+    class ClienteDao implements IDao {
+        - conexion : Connection
+        + ClienteDao(conexion: Connection)
+        + crear(cliente: Cliente) : void
+        + actualizar(cliente: Cliente) : void
+        + eliminar(id: Integer) : void
+        + obtenerPorId(id: Integer) : Cliente
+        + listarTodos() : List<Cliente>
+    }
+
+    class ComidaDao implements IDao {
+        - conexion : Connection
+        + ComidaDao(conexion: Connection)
+        + crear(comida: Comida) : void
+        + actualizar(comida: Comida) : void
+        + eliminar(id: Integer) : void
+        + obtenerPorId(id: Integer) : Comida
+        + listarTodos() : List<Comida>
+    }
+
+    class ConexionBD {
+        - {static} instancia : ConexionBD
+        - conexion : Connection
+        - url : String
+        - user : String
+        - pass : String
+        - ConexionBD()
+        + {static} getInstancia() : ConexionBD
+        + getConexion() : Connection
+    }
+}
+
+package "com.empresa.control" {
+    interface IControlCliente {
+        + registrarCliente(nombre: String, telefono: String, direccion: String) : void
+        + actualizarCliente(id: int, nombre: String, telefono: String, direccion: String) : void
+        + eliminarCliente(id: int) : void
+        + obtenerCliente(id: int) : Cliente
+        + listarClientes() : List<Cliente>
+    }
+
+    class ControlCliente implements IControlCliente {
+        - clienteDao : IDao<Cliente, Integer>
+        + ControlCliente()
+        + ControlCliente(clienteDao: IDao<Cliente, Integer>)
+        + registrarCliente(nombre: String, telefono: String, direccion: String) : void
+        + actualizarCliente(id: int, nombre: String, telefono: String, direccion: String) : void
+        + eliminarCliente(id: int) : void
+        + obtenerCliente(id: int) : Cliente
+        + listarClientes() : List<Cliente>
+        - validarDatos(nombre: String, telefono: String, direccion: String) : void
+    }
+
+    interface IControlComida {
+        + registrarComida(nombre: String, ingredientes: String, precio: double) : void
+        + actualizarComida(id: int, nombre: String, ingredientes: String, precio: double) : void
+        + eliminarComida(id: int) : void
+        + obtenerComida(id: int) : Comida
+        + listarComidas() : List<Comida>
+    }
+
+    class ControlComida implements IControlComida {
+        - comidaDao : IDao<Comida, Integer>
+        + ControlComida()
+        + ControlComida(comidaDao: IDao<Comida, Integer>)
+        + registrarComida(nombre: String, ingredientes: String, precio: double) : void
+        + actualizarComida(id: int, nombre: String, ingredientes: String, precio: double) : void
+        + eliminarComida(id: int) : void
+        + obtenerComida(id: int) : Comida
+        + listarComidas() : List<Comida>
+        - validarDatos(nombre: String, ingredientes: String, precio: double) : void
+    }
+}
+
+package "com.empresa.util" {
+    class Validador {
+        - Validador()
+        + {static} validarTextoNoVacio(texto: String, nombreCampo: String) : void
+        + {static} validarNumeroPositivo(valor: double, nombreCampo: String) : void
+        + {static} validarIdPositivo(id: int, nombreCampo: String) : void
+    }
+}
+
+package "com.empresa.excepciones" {
+    class ClienteNoEncontradoException extends RuntimeException {
+        + ClienteNoEncontradoException(mensaje: String)
+        + ClienteNoEncontradoException(id: int)
+    }
+
+    class ComidaNoEncontradaException extends RuntimeException {
+        + ComidaNoEncontradaException(mensaje: String)
+        + ComidaNoEncontradaException(id: int)
+    }
+}
+
+package "com.empresa.vista" {
+    class VistaCliente {
+        - controlCliente : IControlCliente
+        - txtId : JTextField
+        - txtNombre : JTextField
+        - txtTelefono : JTextField
+        - txtDireccion : JTextField
+        - tabla : JTable
+        - modeloTabla : DefaultTableModel
+        + VistaCliente(controlCliente: IControlCliente)
+        - construirFormulario() : void
+        - construirTabla() : void
+        - guardarCliente() : void
+        - actualizarCliente() : void
+        - eliminarCliente() : void
+        - cargarClientes() : void
+        - limpiarCampos() : void
+    }
+
+    class VistaComida {
+        - controlComida : IControlComida
+        - txtId : JTextField
+        - txtNombre : JTextField
+        - txtIngredientes : JTextField
+        - txtPrecio : JTextField
+        - tabla : JTable
+        - modeloTabla : DefaultTableModel
+        + VistaComida(controlComida: IControlComida)
+        - construirFormulario() : void
+        - construirTabla() : void
+        - guardarComida() : void
+        - actualizarComida() : void
+        - eliminarComida() : void
+        - cargarComidas() : void
+        - limpiarCampos() : void
+    }
+
+    class VistaPrincipal {
+        - cardLayout : CardLayout
+        - panelContenedor : JPanel
+        + VistaPrincipal(controlCliente: IControlCliente, controlComida: IControlComida)
+        - configurarBarraMenu() : void
+        - crearPanelMenu() : JPanel
+        - crearContenedorModulo(tituloModulo: String, panelModulo: JPanel) : JPanel
+    }
+}
+
+package "com.empresa.launcher" {
+    class Main {
+        + {static} main(args: String[]) : void
+    }
+}
+
+' Relaciones
+ClienteDao ..> ConexionBD : usa
+ComidaDao ..> ConexionBD : usa
+ClienteDao ..> Cliente : mapea
+ComidaDao ..> Comida : mapea
+
+ControlCliente --> IDao : usa
+ControlComida --> IDao : usa
+ControlCliente ..> Validador : usa
+ControlComida ..> Validador : usa
+ControlCliente ..> ClienteNoEncontradoException : lanza
+ControlComida ..> ComidaNoEncontradaException : lanza
+
+VistaCliente --> IControlCliente : usa
+VistaComida --> IControlComida : usa
+VistaPrincipal *-- VistaCliente : contiene
+VistaPrincipal *-- VistaComida : contiene
+
+Main ..> VistaPrincipal : lanza
+Main ..> ControlCliente : crea
+Main ..> ControlComida : crea
+
+@enduml
