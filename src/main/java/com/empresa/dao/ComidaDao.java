@@ -1,6 +1,6 @@
 package com.empresa.dao;
 
-import com.empresa.modelo.Cliente;
+import com.empresa.modelo.Comida;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -8,11 +8,11 @@ import java.util.List;
 
 /**
  * DAO encargado de gestionar las operaciones de acceso a datos
- * relacionadas con la entidad {@link Cliente}.
+ * relacionadas con la entidad {@link Comida}.
  *
  * <p>Esta clase implementa la interfaz {@link IDao} y proporciona
  * las operaciones CRUD necesarias para crear, consultar, actualizar
- * y eliminar clientes en la base de datos.</p>
+ * y eliminar comidas en la base de datos.</p>
  *
  * <p>La clase utiliza JDBC para establecer la comunicación con
  * la base de datos.</p>
@@ -20,7 +20,7 @@ import java.util.List;
  * @author Paula Martínez
  * @version 2.0
  */
-public class ClienteDao implements IDao<Cliente, Integer> {
+public class ComidaDao implements IDao<Comida, Integer> {
 
     /**
      * Conexión utilizada para realizar las operaciones
@@ -29,30 +29,30 @@ public class ClienteDao implements IDao<Cliente, Integer> {
     private Connection conexion;
 
     /**
-     * Constructor de ClienteDao.
+     * Constructor de ComidaDao.
      *
      * @param conexion conexión activa con la base de datos
      */
-    public ClienteDao(Connection conexion) {
+    public ComidaDao(Connection conexion) {
         this.conexion = conexion;
     }
 
     /**
-     * Inserta un nuevo cliente en la base de datos.
+     * Inserta una nueva comida en la base de datos.
      *
-     * @param cliente cliente que se desea registrar
+     * @param comida comida que se desea registrar
      */
     @Override
-    public void crear(Cliente cliente) {
-        String sql = "INSERT INTO cliente " +
-                "(nombre, telefono, direccion) " +
+    public void crear(Comida comida) {
+        String sql = "INSERT INTO comida " +
+                "(nombre, ingredientes, precio) " +
                 "VALUES (?, ?, ?)";
 
         try (PreparedStatement statement = conexion.prepareStatement(sql)) {
 
-            statement.setString(1, cliente.getNombre());
-            statement.setString(2, cliente.getTelefono());
-            statement.setString(3, cliente.getDireccion());
+            statement.setString(1, comida.getNombre());
+            statement.setString(2, comida.getIngredientes());
+            statement.setDouble(3, comida.getPrecio());
 
             statement.executeUpdate();
 
@@ -62,22 +62,22 @@ public class ClienteDao implements IDao<Cliente, Integer> {
     }
 
     /**
-     * Actualiza los datos de un cliente existente.
+     * Actualiza los datos de una comida existente.
      *
-     * @param cliente cliente que contiene los datos actualizados
+     * @param comida comida que contiene los datos actualizados
      */
     @Override
-    public void actualizar(Cliente cliente) {
-        String sql = "UPDATE cliente SET " +
-                "nombre = ?, telefono = ?, direccion = ? " +
+    public void actualizar(Comida comida) {
+        String sql = "UPDATE comida SET " +
+                "nombre = ?, ingredientes = ?, precio = ? " +
                 "WHERE id = ?";
 
         try (PreparedStatement statement = conexion.prepareStatement(sql)) {
 
-            statement.setString(1, cliente.getNombre());
-            statement.setString(2, cliente.getTelefono());
-            statement.setString(3, cliente.getDireccion());
-            statement.setInt(4, cliente.getId());
+            statement.setString(1, comida.getNombre());
+            statement.setString(2, comida.getIngredientes());
+            statement.setDouble(3, comida.getPrecio());
+            statement.setInt(4, comida.getId());
 
             statement.executeUpdate();
 
@@ -87,13 +87,13 @@ public class ClienteDao implements IDao<Cliente, Integer> {
     }
 
     /**
-     * Elimina un cliente de la base de datos.
+     * Elimina una comida de la base de datos.
      *
-     * @param id identificador del cliente que se desea eliminar
+     * @param id identificador de la comida que se desea eliminar
      */
     @Override
     public void eliminar(Integer id) {
-        String sql = "DELETE FROM cliente WHERE id = ?";
+        String sql = "DELETE FROM comida WHERE id = ?";
 
         try (PreparedStatement statement = conexion.prepareStatement(sql)) {
 
@@ -106,15 +106,15 @@ public class ClienteDao implements IDao<Cliente, Integer> {
     }
 
     /**
-     * Busca un cliente utilizando su identificador.
+     * Busca una comida utilizando su identificador.
      *
-     * @param id identificador del cliente
-     * @return cliente encontrado o null si no existe
+     * @param id identificador de la comida
+     * @return comida encontrada o null si no existe
      */
     @Override
-    public Cliente obtenerPorId(Integer id) {
-        String sql = "SELECT id, nombre, telefono, direccion " +
-                "FROM cliente WHERE id = ?";
+    public Comida obtenerPorId(Integer id) {
+        String sql = "SELECT id, nombre, ingredientes, precio " +
+                "FROM comida WHERE id = ?";
 
         try (PreparedStatement statement = conexion.prepareStatement(sql)) {
 
@@ -123,11 +123,11 @@ public class ClienteDao implements IDao<Cliente, Integer> {
             try (ResultSet resultado = statement.executeQuery()) {
 
                 if (resultado.next()) {
-                    return new Cliente(
+                    return new Comida(
                             resultado.getInt("id"),
                             resultado.getString("nombre"),
-                            resultado.getString("telefono"),
-                            resultado.getString("direccion")
+                            resultado.getString("ingredientes"),
+                            resultado.getDouble("precio")
                     );
                 }
             }
@@ -140,36 +140,36 @@ public class ClienteDao implements IDao<Cliente, Integer> {
     }
 
     /**
-     * Obtiene todos los clientes almacenados en la base de datos.
+     * Obtiene todas las comidas almacenadas en la base de datos.
      *
-     * @return lista con todos los clientes registrados
+     * @return lista con todas las comidas registradas
      */
     @Override
-    public List<Cliente> listarTodos() {
-        List<Cliente> clientes = new ArrayList<>();
+    public List<Comida> listarTodos() {
+        List<Comida> comidas = new ArrayList<>();
 
-        String sql = "SELECT id, nombre, telefono, direccion " +
-                "FROM cliente";
+        String sql = "SELECT id, nombre, ingredientes, precio " +
+                "FROM comida";
 
         try (PreparedStatement statement = conexion.prepareStatement(sql);
              ResultSet resultado = statement.executeQuery()) {
 
             while (resultado.next()) {
 
-                Cliente cliente = new Cliente(
+                Comida comida = new Comida(
                         resultado.getInt("id"),
                         resultado.getString("nombre"),
-                        resultado.getString("telefono"),
-                        resultado.getString("direccion")
+                        resultado.getString("ingredientes"),
+                        resultado.getDouble("precio")
                 );
 
-                clientes.add(cliente);
+                comidas.add(comida);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return clientes;
+        return comidas;
     }
 }

@@ -34,7 +34,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.empresa.main.Main</mainClass>
+                            <mainClass>com.empresa.launcher.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
