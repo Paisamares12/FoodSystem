@@ -1,15 +1,14 @@
 package com.empresa.modelo;
 
+import java.util.Objects;
+
 /**
- * Representa un cliente dentro del sistema.
+ * Representa la entidad Cliente dentro del dominio del sistema.
  *
- * <p>Esta clase pertenece al paquete de modelo y se encarga únicamente
- * de almacenar la información básica de un cliente. No contiene lógica
- * de negocio ni elementos relacionados con la presentación.</p>
- *
- * <p>La clase contiene los atributos de identificación, nombre,
- * teléfono y dirección del cliente, junto con sus respectivos
- * constructores, métodos getters y setters.</p>
+ * <p>Esta clase es un componente puro del modelo (POJO / Bean) y se encarga
+ * de encapsular el estado y los datos de un cliente. Sigue estrictamente
+ * el principio de encapsulamiento mediante atributos privados y métodos
+ * de acceso público.</p>
  *
  * @author Paula Martínez
  * @version 2.0
@@ -17,7 +16,7 @@ package com.empresa.modelo;
 public class Cliente {
 
     /**
-     * Identificador único del cliente.
+     * Identificador único del cliente (clave primaria).
      */
     private int id;
 
@@ -27,35 +26,42 @@ public class Cliente {
     private String nombre;
 
     /**
-     * Número de teléfono del cliente.
+     * Número telefónico de contacto del cliente.
      */
     private String telefono;
 
     /**
-     * Dirección de entrega del cliente.
+     * Dirección física de despacho o residencia.
      */
     private String direccion;
 
     /**
-     * Constructor vacío de la clase Cliente.
-     *
-     * <p>Permite crear una instancia de Cliente sin proporcionar
-     * inicialmente sus atributos. Es utilizado, entre otros casos,
-     * para facilitar el mapeo de resultados obtenidos mediante JDBC.</p>
+     * Constructor por defecto.
+     * Permite instanciar un objeto vacío para mapeo u operaciones dinámicas.
      */
     public Cliente() {
     }
 
     /**
-     * Constructor completo de la clase Cliente.
+     * Constructor para creación de clientes nuevos (sin identificador asignado por la BD).
      *
-     * <p>Permite crear un cliente estableciendo todos sus atributos
-     * desde el momento de su creación.</p>
+     * @param nombre    nombre completo del cliente
+     * @param telefono  teléfono de contacto
+     * @param direccion dirección de entrega
+     */
+    public Cliente(String nombre, String telefono, String direccion) {
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.direccion = direccion;
+    }
+
+    /**
+     * Constructor completo para clientes existentes (con identificador).
      *
-     * @param id identificador único del cliente
-     * @param nombre nombre completo del cliente
-     * @param telefono número de teléfono del cliente
-     * @param direccion dirección de entrega del cliente
+     * @param id        identificador único del cliente
+     * @param nombre    nombre completo del cliente
+     * @param telefono  teléfono de contacto
+     * @param direccion dirección de entrega
      */
     public Cliente(int id, String nombre, String telefono, String direccion) {
         this.id = id;
@@ -65,90 +71,116 @@ public class Cliente {
     }
 
     /**
-     * Constructor sin id de la clase Cliente.
+     * Obtiene el identificador único del cliente.
      *
-     * <p>Permite crear un cliente estableciendo todos sus atributos
-     * desde el momento de su creación.</p>
-     *
-     * @param nombre nombre completo del cliente
-     * @param telefono número de teléfono del cliente
-     * @param direccion dirección de entrega del cliente
-     */
-    public Cliente(String nombre, String telefono, String direccion) {
-        this.nombre = nombre;
-        this.telefono = telefono;
-        this.direccion = direccion;
-    }
-
-    /**
-     * Obtiene el identificador del cliente.
-     *
-     * @return identificador único del cliente
+     * @return identificador numérico
      */
     public int getId() {
         return id;
     }
 
     /**
-     * Obtiene el nombre del cliente.
-     *
-     * @return nombre completo del cliente
-     */
-    public String getNombre() {
-        return nombre;
-    }
-
-    /**
-     * Obtiene el número de teléfono del cliente.
-     *
-     * @return número de teléfono del cliente
-     */
-    public String getTelefono() {
-        return telefono;
-    }
-
-    /**
-     * Obtiene la dirección de entrega del cliente.
-     *
-     * @return dirección del cliente
-     */
-    public String getDireccion() {
-        return direccion;
-    }
-
-    /**
      * Modifica el identificador del cliente.
      *
-     * @param id nuevo identificador del cliente
+     * @param id nuevo identificador numérico
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
-     * Modifica el nombre del cliente.
+     * Obtiene el nombre completo del cliente.
      *
-     * @param nombre nuevo nombre completo del cliente
+     * @return nombre del cliente
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * Modifica el nombre completo del cliente.
+     *
+     * @param nombre nuevo nombre del cliente
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
     /**
-     * Modifica el número de teléfono del cliente.
+     * Obtiene el número telefónico del cliente.
      *
-     * @param tel nuevo número de teléfono del cliente
+     * @return teléfono de contacto
      */
-    public void setTelefono(String tel) {
-        this.telefono = tel;
+    public String getTelefono() {
+        return telefono;
+    }
+
+    /**
+     * Modifica el número telefónico del cliente.
+     *
+     * @param telefono nuevo teléfono de contacto
+     */
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    /**
+     * Obtiene la dirección de entrega del cliente.
+     *
+     * @return dirección de entrega
+     */
+    public String getDireccion() {
+        return direccion;
     }
 
     /**
      * Modifica la dirección de entrega del cliente.
      *
-     * @param dir nueva dirección de entrega del cliente
+     * @param direccion nueva dirección
      */
-    public void setDireccion(String dir) {
-        this.direccion = dir;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    /**
+     * Compara la igualdad de dos clientes basándose en su identificador o sus atributos.
+     *
+     * @param o objeto a comparar
+     * @return true si son equivalentes, false de lo contrario
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cliente cliente = (Cliente) o;
+        return id == cliente.id &&
+                Objects.equals(nombre, cliente.nombre) &&
+                Objects.equals(telefono, cliente.telefono) &&
+                Objects.equals(direccion, cliente.direccion);
+    }
+
+    /**
+     * Calcula el código hash del cliente.
+     *
+     * @return código hash
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nombre, telefono, direccion);
+    }
+
+    /**
+     * Retorna una representación textual amigable del cliente.
+     *
+     * @return cadena con los datos del cliente
+     */
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", direccion='" + direccion + '\'' +
+                '}';
     }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Sep 07, 2026 at 02:24 AM
+-- Generation Time: Sep 07, 2026 at 03:20 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,7 +41,8 @@ CREATE TABLE `cliente` (
 INSERT INTO `cliente` (`id`, `nombre`, `telefono`, `direccion`) VALUES
 (1, 'Paula Martinez', '3001234567', 'Calle 10 #20-30'),
 (2, 'Carlos Gomez', '3019876543', 'Carrera 15 #40-25'),
-(3, 'Ana Rodriguez', '3154567890', 'Calle 50 #12-18');
+(3, 'Ana Rodriguez', '3154567890', 'Calle 50 #12-18'),
+(5, 'Helio Ramírez', '3125076439', 'Cl. 13 #31 -75');
 
 -- --------------------------------------------------------
 
@@ -63,21 +64,9 @@ CREATE TABLE `comida` (
 INSERT INTO `comida` (`id`, `nombre`, `ingredientes`, `precio`) VALUES
 (1, 'Hamburguesa Clásica', 'Pan, carne, queso, lechuga y tomate', 15000.00),
 (2, 'Perro Caliente', 'Pan, salchicha, queso, papas y salsas', 12000.00),
-(3, 'Pizza Personal', 'Masa, queso, salsa de tomate y pepperoni', 18000.00);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `pedido`
---
-
-CREATE TABLE `pedido` (
-  `id` int(11) NOT NULL,
-  `id_cliente` int(11) NOT NULL,
-  `id_comida` int(11) NOT NULL,
-  `cantidad` int(11) NOT NULL,
-  `total` decimal(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+(3, 'Pizza Personal', 'Masa, queso, salsa de tomate y pepperoni', 18000.00),
+(5, 'Panzerotti', 'Harina, queso y tomate', 20000.00),
+(6, 'Hamburguesa Doble', 'Pan, carne, queso, lechuga, tomate y tocino', 22000.00);
 
 --
 -- Indexes for dumped tables
@@ -96,14 +85,6 @@ ALTER TABLE `comida`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `pedido`
---
-ALTER TABLE `pedido`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_pedido_cliente` (`id_cliente`),
-  ADD KEY `fk_pedido_comida` (`id_comida`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -111,30 +92,13 @@ ALTER TABLE `pedido`
 -- AUTO_INCREMENT for table `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `comida`
 --
 ALTER TABLE `comida`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `pedido`
---
-ALTER TABLE `pedido`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `pedido`
---
-ALTER TABLE `pedido`
-  ADD CONSTRAINT `fk_pedido_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id`),
-  ADD CONSTRAINT `fk_pedido_comida` FOREIGN KEY (`id_comida`) REFERENCES `comida` (`id`);
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
