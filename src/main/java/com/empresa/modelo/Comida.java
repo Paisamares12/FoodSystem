@@ -66,6 +66,22 @@ public class Comida {
     }
 
     /**
+     * Constructor sin id de la clase Comida.
+     *
+     * <p>Permite crear un producto estableciendo sus atributos
+     * desde el momento de su creación.</p>
+     *
+     * @param nombre nombre del producto
+     * @param ingredientes lista de ingredientes del producto
+     * @param precio precio de venta del producto
+     */
+    public Comida(String nombre, String ingredientes, double precio) {
+        this.nombre = nombre;
+        this.ingredientes = ingredientes;
+        this.precio = precio;
+    }
+
+    /**
      * Obtiene el identificador del producto.
      *
      * @return identificador único del producto

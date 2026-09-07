@@ -65,6 +65,22 @@ public class Cliente {
     }
 
     /**
+     * Constructor sin id de la clase Cliente.
+     *
+     * <p>Permite crear un cliente estableciendo todos sus atributos
+     * desde el momento de su creación.</p>
+     *
+     * @param nombre nombre completo del cliente
+     * @param telefono número de teléfono del cliente
+     * @param direccion dirección de entrega del cliente
+     */
+    public Cliente(String nombre, String telefono, String direccion) {
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.direccion = direccion;
+    }
+
+    /**
      * Obtiene el identificador del cliente.
      *
      * @return identificador único del cliente

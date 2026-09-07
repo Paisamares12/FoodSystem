@@ -33,7 +33,7 @@ public class ConexionBD {
      * URL de conexión a la base de datos.
      */
     private final String url =
-            "jdbc:mysql://localhost:3306/comidas_rapidas";
+            "jdbc:mysql://localhost:3307/food_system";
 
     /**
      * Usuario de la base de datos.
@@ -43,7 +43,7 @@ public class ConexionBD {
     /**
      * Contraseña de la base de datos.
      */
-    private final String pass = "password";
+    private final String pass = "";
 
     /**
      * Constructor privado.
