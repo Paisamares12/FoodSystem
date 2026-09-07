@@ -142,32 +142,6 @@ public class Cliente {
         this.direccion = direccion;
     }
 
-    /**
-     * Compara la igualdad de dos clientes basándose en su identificador o sus atributos.
-     *
-     * @param o objeto a comparar
-     * @return true si son equivalentes, false de lo contrario
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Cliente cliente = (Cliente) o;
-        return id == cliente.id &&
-                Objects.equals(nombre, cliente.nombre) &&
-                Objects.equals(telefono, cliente.telefono) &&
-                Objects.equals(direccion, cliente.direccion);
-    }
-
-    /**
-     * Calcula el código hash del cliente.
-     *
-     * @return código hash
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, nombre, telefono, direccion);
-    }
 
     /**
      * Retorna una representación textual amigable del cliente.

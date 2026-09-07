@@ -142,33 +142,6 @@ public class Comida {
     }
 
     /**
-     * Compara la igualdad de dos productos basándose en su ID y atributos.
-     *
-     * @param o objeto a comparar
-     * @return true si son equivalentes, false de lo contrario
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Comida comida = (Comida) o;
-        return id == comida.id &&
-                Double.compare(comida.precio, precio) == 0 &&
-                Objects.equals(nombre, comida.nombre) &&
-                Objects.equals(ingredientes, comida.ingredientes);
-    }
-
-    /**
-     * Calcula el código hash del producto.
-     *
-     * @return código hash
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, nombre, ingredientes, precio);
-    }
-
-    /**
      * Retorna una representación textual del producto de comida rápida.
      *
      * @return cadena con los datos del producto
