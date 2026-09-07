@@ -5,14 +5,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Gestiona la conexión entre la aplicación y la base de datos.
+ * Gestiona la conexión con la base de datos.
  *
- * <p>Esta clase proporciona un método para establecer una conexión
- * mediante JDBC y centraliza los datos necesarios para conectarse
- * al servidor de base de datos.</p>
+ * <p>Esta clase implementa el patrón de diseño Singleton,
+ * garantizando que exista una única instancia de ConexionDB
+ * durante la ejecución de la aplicación.</p>
  *
- * <p>En este proyecto se utiliza MySQL como sistema gestor de
- * bases de datos.</p>
+ * <p>La conexión se establece mediante JDBC utilizando
+ * un servidor MySQL.</p>
  *
  * @author Paula Martínez
  * @version 2.0
@@ -20,40 +20,82 @@ import java.sql.SQLException;
 public class ConexionBD {
 
     /**
-     * Dirección de conexión a la base de datos.
+     * Única instancia de la clase ConexionDB.
      */
-    private static final String URL =
-            "jdbc:mysql://localhost:3306/empresa";
+    private static ConexionBD instancia;
 
     /**
-     * Usuario utilizado para acceder a la base de datos.
+     * Conexión activa con la base de datos.
      */
-    private static final String USUARIO = "root";
+    private Connection conexion;
 
     /**
-     * Contraseña utilizada para acceder a la base de datos.
+     * URL de conexión a la base de datos.
      */
-    private static final String PASSWORD = "";
+    private final String url =
+            "jdbc:mysql://localhost:3306/comidas_rapidas";
 
     /**
-     * Constructor privado para evitar la creación de objetos
-     * innecesarios de esta clase.
+     * Usuario de la base de datos.
+     */
+    private final String user = "root";
+
+    /**
+     * Contraseña de la base de datos.
+     */
+    private final String pass = "password";
+
+    /**
+     * Constructor privado.
+     *
+     * <p>Al ser privado, evita que otras clases puedan crear
+     * directamente objetos de tipo ConexionDB. La instancia
+     * debe obtenerse mediante {@link #getInstancia()}.</p>
      */
     private ConexionBD() {
+
+        try {
+            conexion = DriverManager.getConnection(
+                    url,
+                    user,
+                    pass
+            );
+
+        } catch (SQLException e) {
+            throw new RuntimeException(
+                    "Error al conectar a la base de datos", e
+            );
+        }
     }
 
     /**
-     * Establece una conexión con la base de datos.
+     * Obtiene la única instancia de ConexionDB.
      *
-     * @return objeto Connection con la conexión establecida
-     * @throws SQLException si ocurre un error al establecer
-     *         la conexión con la base de datos
+     * <p>Si todavía no existe una instancia, se crea.
+     * Si ya existe, se devuelve la instancia existente.</p>
+     *
+     * @return instancia única de ConexionDB
      */
-    public static Connection obtenerConexion() throws SQLException {
-        return DriverManager.getConnection(
-                URL,
-                USUARIO,
-                PASSWORD
-        );
+    public static ConexionBD getInstancia() {
+        if (instancia == null) {
+            instancia = new ConexionBD();
+        }
+        return instancia;
+    }
+
+    /**
+     * Obtiene la conexión activa con la base de datos.
+     *
+     * @return conexión JDBC con la base de datos
+     */
+    public Connection getConexion() {
+        try {
+            if (conexion == null || conexion.isClosed()) {
+                conexion = DriverManager.getConnection(url, user, pass);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al verificar/reconectar la BD", e);
+        }
+        return conexion;
     }
 }
