@@ -36,3 +36,9 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+FoodSystem.smp
+FoodSystem.smproj
+sources.txt
+
+out/

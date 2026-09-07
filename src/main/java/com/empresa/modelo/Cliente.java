@@ -65,7 +65,7 @@ public class Cliente {
     }
 
     /**
-     * Constructor sin id de la clase Cliente.
+     * Constructor sin ID de la clase Cliente.
      *
      * <p>Permite crear un cliente estableciendo todos sus atributos
      * desde el momento de su creación.</p>
