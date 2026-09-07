@@ -19,8 +19,6 @@ package "com.empresa.modelo" {
         + setTelefono(telefono: String) : void
         + getDireccion() : String
         + setDireccion(direccion: String) : void
-        + equals(o: Object) : boolean
-        + hashCode() : int
         + toString() : String
     }
 
@@ -40,8 +38,6 @@ package "com.empresa.modelo" {
         + setIngredientes(ingredientes: String) : void
         + getPrecio() : double
         + setPrecio(precio: double) : void
-        + equals(o: Object) : boolean
-        + hashCode() : int
         + toString() : String
     }
 }
