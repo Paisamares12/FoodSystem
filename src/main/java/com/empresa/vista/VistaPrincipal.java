@@ -128,11 +128,11 @@ public class VistaPrincipal extends JFrame {
         lblSubtitulo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         lblSubtitulo.setForeground(new Color(108, 117, 125));
 
-        JButton btnClientes = new JButton("👤 Gestión de Clientes");
+        JButton btnClientes = new JButton("Gestión de Clientes");
         btnClientes.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnClientes.setPreferredSize(new Dimension(280, 45));
 
-        JButton btnComidas = new JButton("🍔 Gestión de Comidas Rápidas");
+        JButton btnComidas = new JButton("Gestión de Comidas Rápidas");
         btnComidas.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnComidas.setPreferredSize(new Dimension(280, 45));
 
