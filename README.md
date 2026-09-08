@@ -12,8 +12,6 @@ El proyecto fue diseñado aplicando buenas prácticas de ingeniería de software
 3. [Cumplimiento de los Principios SOLID](#-3-cumplimiento-de-los-principios-solid)
 4. [Estructura del Proyecto y Paquetes](#-4-estructura-del-proyecto-y-paquetes)
 5. [Configuración y Puesta en Marcha](#-5-configuración-y-puesta-en-marcha)
-6. [Análisis de Métricas de Software (Source Monitor)](#-6-análisis-de-métricas-de-software-source-monitor)
-7. [Documentación y Diagramas Entregables](#-7-documentación-y-diagramas-entregables)
 
 ---
 
@@ -136,24 +134,3 @@ FoodSystem
      ```
 
 ---
-
-## 📊 6. Análisis de Métricas de Software (Source Monitor)
-
-La herramienta **Source Monitor** fue utilizada para auditar la calidad interna del código fuente. Los resultados obtenidos demuestran un software de alta calidad, bajo acoplamiento y excelente mantenibilidad:
-
-| Métrica | Rango en FoodSystem | Valor de Referencia en la Industria | Interpretación de Calidad |
-| :--- | :---: | :---: | :--- |
-| **Comment Percentage (% Comentarios)** | **~38% - 45%** | 20% - 40% | **Excelente.** Documentación formal en JavaDoc presente en todas las clases, métodos, parámetros y excepciones. |
-| **Avg. Cyclomatic Complexity** | **1.2 - 1.5** | 1.0 - 2.0 | **Óptimo.** Métodos directos, modulares y fáciles de someter a pruebas unitarias. |
-| **Max. Cyclomatic Complexity** | **4 - 5** | ≤ 10 | **Bajo riesgo.** No existen métodos complejos o con bifurcaciones excesivas. |
-| **Max. Block Depth (Anidamiento)** | **3** | ≤ 4 | **Estructura limpia.** Ausencia de "código espagueti" o anidamientos profundos. |
-
----
-
-## 📚 7. Documentación y Diagramas Entregables
-
-Para consultar el detalle de los entregables formales solicitados en el taller, revisa los siguientes documentos:
-
-* 📄 [**Informe de Métricas e Interpretación de Resultados**](docs/DOCUMENTACION_Y_METRICAS.md)
-* 📐 [**Guía Técnica y Código del Diagrama de Clases UML**](docs/GUIA_DIAGRAMA_DE_CLASES.md)
-* 👥 [**Guía Técnica y Código del Diagrama de Casos de Uso**](docs/GUIA_DIAGRAMA_CASOS_DE_USO.md)
